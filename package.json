@@ -1,0 +1,43 @@
+{
+  "name": "sogip-group",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.7.2",
+    "@google/generative-ai": "^0.21.0",
+    "@prisma/client": "^5.22.0",
+    "aos": "^2.3.4",
+    "bcryptjs": "^3.0.3",
+    "framer-motion": "^11.11.11",
+    "next": "15.0.3",
+    "next-auth": "^4.24.10",
+    "nodemailer": "^6.9.16",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.2",
+    "sonner": "^1.7.0",
+    "tailwindcss-animate": "^1.0.7",
+    "twilio": "^5.3.7",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@hookform/resolvers": "^3.9.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.3",
+    "postcss": "^8",
+    "prisma": "^5.22.0",
+    "tailwindcss": "^3.4.15"
+  }
+}
