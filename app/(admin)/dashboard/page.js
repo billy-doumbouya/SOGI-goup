@@ -1,4 +1,3 @@
-"use client";
 import { prisma } from "@/lib/db/client";
 
 async function getStats() {
