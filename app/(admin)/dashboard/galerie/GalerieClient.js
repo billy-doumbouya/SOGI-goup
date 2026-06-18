@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useTransition, useRef } from "react";
 
 export default function GalerieClient({
@@ -9,10 +7,10 @@ export default function GalerieClient({
   deleteItem,
   createItem,
 }) {
-  const [filter, setFilter]          = useState("Tous");
-  const [showForm, setShowForm]      = useState(false);
+  const [filter, setFilter] = useState("Tous");
+  const [showForm, setShowForm] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const formRef                      = useRef(null);
+  const formRef = useRef(null);
 
   const filtered =
     filter === "Tous" ? items : items.filter((i) => i.category === filter);
@@ -47,7 +45,11 @@ export default function GalerieClient({
               style={
                 filter === cat
                   ? { background: "rgba(201,168,76,0.15)", color: "#C9A84C" }
-                  : { background: "#111118", color: "#8A8A8A", border: "1px solid rgba(255,255,255,0.07)" }
+                  : {
+                      background: "#111118",
+                      color: "#8A8A8A",
+                      border: "1px solid rgba(255,255,255,0.07)",
+                    }
               }
             >
               {cat}
@@ -78,33 +80,57 @@ export default function GalerieClient({
             border: "1px solid rgba(201,168,76,0.2)",
           }}
         >
-          <h3 className="font-display text-lg mb-4" style={{ color: "#F0EDE8" }}>
+          <h3
+            className="font-display text-lg mb-4"
+            style={{ color: "#F0EDE8" }}
+          >
             Nouvel élément
           </h3>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label className="label">Titre *</label>
-              <input name="title" required className="input" placeholder="Ex : Résidence Kaloum" />
+              <input
+                name="title"
+                required
+                className="input"
+                placeholder="Ex : Résidence Kaloum"
+              />
             </div>
             <div>
               <label className="label">Catégorie *</label>
               <select name="category" required className="input">
                 {categories.map((c) => (
-                  <option key={c} value={c}>{c}</option>
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="col-span-2">
               <label className="label">URL image *</label>
-              <input name="imageUrl" required className="input" placeholder="https://..." />
+              <input
+                name="imageUrl"
+                required
+                className="input"
+                placeholder="https://..."
+              />
             </div>
             <div className="col-span-2">
               <label className="label">Description</label>
-              <input name="description" className="input" placeholder="Description optionnelle" />
+              <input
+                name="description"
+                className="input"
+                placeholder="Description optionnelle"
+              />
             </div>
             <div>
               <label className="label">Ordre</label>
-              <input name="order" type="number" className="input" defaultValue={0} />
+              <input
+                name="order"
+                type="number"
+                className="input"
+                defaultValue={0}
+              />
             </div>
             <div className="flex items-end">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -116,7 +142,9 @@ export default function GalerieClient({
                   className="w-4 h-4 rounded"
                   style={{ accentColor: "#C9A84C" }}
                 />
-                <span className="text-sm" style={{ color: "#8A8A8A" }}>Publié</span>
+                <span className="text-sm" style={{ color: "#8A8A8A" }}>
+                  Publié
+                </span>
               </label>
             </div>
           </div>
@@ -134,7 +162,10 @@ export default function GalerieClient({
       {filtered.length === 0 ? (
         <div
           className="rounded-xl p-12 text-center"
-          style={{ background: "#111118", border: "1px solid rgba(255,255,255,0.07)" }}
+          style={{
+            background: "#111118",
+            border: "1px solid rgba(255,255,255,0.07)",
+          }}
         >
           <p className="text-sm" style={{ color: "#4A4A55" }}>
             Aucun élément dans cette catégorie.
@@ -204,8 +235,14 @@ export default function GalerieClient({
                     className="text-xs px-3 py-1 rounded-full transition-all"
                     style={
                       item.published
-                        ? { background: "rgba(74,222,128,0.1)", color: "#4ADE80" }
-                        : { background: "rgba(255,255,255,0.05)", color: "#8A8A8A" }
+                        ? {
+                            background: "rgba(74,222,128,0.1)",
+                            color: "#4ADE80",
+                          }
+                        : {
+                            background: "rgba(255,255,255,0.05)",
+                            color: "#8A8A8A",
+                          }
                     }
                   >
                     {item.published ? "Publié" : "Masqué"}
@@ -215,8 +252,12 @@ export default function GalerieClient({
                     disabled={isPending}
                     className="text-xs transition-colors"
                     style={{ color: "#4A4A55" }}
-                    onMouseOver={(e) => (e.currentTarget.style.color = "#EF4444")}
-                    onMouseOut={(e) => (e.currentTarget.style.color = "#4A4A55")}
+                    onMouseOver={(e) =>
+                      (e.currentTarget.style.color = "#EF4444")
+                    }
+                    onMouseOut={(e) =>
+                      (e.currentTarget.style.color = "#4A4A55")
+                    }
                   >
                     Supprimer
                   </button>
