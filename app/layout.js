@@ -1,9 +1,12 @@
-
 import "../styles/globals.css";
 import { Toaster } from "sonner";
 import AOSInit from "@/components/layout/AOSInit";
 
 export const metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://sogipgroup.com",
+  ),
+
   title: {
     default: "SOGIP Group — Vision · Innovation · Réalisation",
     template: "%s | SOGIP Group",
