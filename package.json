@@ -22,7 +22,7 @@
     "aos": "^2.3.4",
     "bcryptjs": "^3.0.3",
     "framer-motion": "^11.11.11",
-    "next": "15.0.3",
+    "next": "^16.2.9",
     "next-auth": "^4.24.10",
     "nodemailer": "^7.0.13",
     "react": "^18.3.1",
