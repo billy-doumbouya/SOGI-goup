@@ -1,3 +1,5 @@
+"use client";s
+
 import { useState, useTransition, useRef } from "react";
 
 export default function GalerieClient({

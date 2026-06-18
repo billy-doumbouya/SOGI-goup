@@ -58,10 +58,8 @@ export default function BTPPage() {
           <div className="max-w-3xl" data-aos="fade-up">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 text-sm mb-6 transition-colors"
+              className="inline-flex items-center gap-2 text-sm mb-6 transition-colors hover:text-[#C9A84C]"
               style={{ color: "#8A8A8A" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#8A8A8A")}
             >
               <BackIcon /> Tous les services
             </Link>
