@@ -1,13 +1,6 @@
 'use client'
-
 import { useEffect, useRef, useState } from 'react'
-
-const STATS = [
-  { value: 4,    suffix: '',   label: 'Filiales actives',          desc: 'BTP · Immo · Énergie · Formation' },
-  { value: 10,   suffix: '+',  label: 'Années d\'expérience',      desc: 'En Guinée et Afrique de l\'Ouest' },
-  { value: 200,  suffix: '+',  label: 'Projets réalisés',          desc: 'Constructions, installations, formations' },
-  { value: 1500, suffix: '+',  label: 'Clients satisfaits',        desc: 'Particuliers, entreprises, institutions' },
-]
+import { STATS } from '@/lib/stat'
 
 function useCounter(target, duration = 1800, active = false) {
   const [count, setCount] = useState(0)
@@ -82,7 +75,6 @@ export default function StatsSection() {
         style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)' }}
         aria-hidden="true"
       />
-
       <div className="container">
         <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0"
           style={{ '--tw-divide-opacity': 1, borderColor: 'rgba(255,255,255,0.06)' }}
@@ -92,7 +84,6 @@ export default function StatsSection() {
           ))}
         </div>
       </div>
-
       {/* Gold glow bottom */}
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] pointer-events-none"

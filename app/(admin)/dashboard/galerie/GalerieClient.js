@@ -1,4 +1,4 @@
-"use client";s
+"use client";
 
 import { useState, useTransition, useRef } from "react";
 

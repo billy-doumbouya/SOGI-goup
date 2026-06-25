@@ -1,5 +1,6 @@
 "use client"; // <-- Déclare le composant côté client pour utiliser usePathname et onClick
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -40,30 +41,36 @@ const NAV = [
 
 export default function AdminSidebar({ user }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   const isActive = (href) =>
     href === "/dashboard" ? pathname === href : pathname.startsWith(href);
 
-  return (
-    <aside
-      className="hidden md:flex flex-col w-60 min-h-screen flex-shrink-0"
-      style={{
-        background: "#0D0D14",
-        borderRight: "1px solid rgba(255,255,255,0.07)",
-      }}
-    >
+  const SidebarContent = (
+    <>
       {/* Logo */}
       <div
-        className="px-5 py-5"
+        className="px-5 py-5 flex items-center justify-between"
         style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
       >
-        <SogipLogo variant="icon" className="h-9 w-9" />
-        <p
-          className="text-xs mt-2 font-medium tracking-widest uppercase"
-          style={{ color: "#4A4A55" }}
+        <div>
+          <SogipLogo variant="icon" className="h-9 w-9" />
+          <p
+            className="text-xs mt-2 font-medium tracking-widest uppercase"
+            style={{ color: "#4A4A55" }}
+          >
+            Administration
+          </p>
+        </div>
+        {/* Bouton fermer — visible seulement en overlay mobile */}
+        <button
+          onClick={() => setOpen(false)}
+          className="md:hidden w-8 h-8 flex items-center justify-center rounded-lg"
+          style={{ color: "#8A8A8A" }}
+          aria-label="Fermer le menu"
         >
-          Administration
-        </p>
+          <CloseIcon />
+        </button>
       </div>
 
       {/* Nav */}
@@ -77,9 +84,9 @@ export default function AdminSidebar({ user }) {
             const active = isActive(item.href);
             return (
               <li key={item.href}>
-                {/* Suppression de onMouseEnter/onMouseLeave au profit de hover:text-[#F0EDE8] */}
                 <Link
                   href={item.href}
+                  onClick={() => setOpen(false)}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                     active ? "" : "hover:text-[#F0EDE8]"
                   }`}
@@ -135,7 +142,6 @@ export default function AdminSidebar({ user }) {
           </div>
         </div>
 
-        {/* Suppression de onMouseEnter/onMouseLeave au profit de hover:text-red-500 */}
         <button
           onClick={() => signOut({ callbackUrl: "/admin/login" })}
           className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 text-[#8A8A8A] hover:text-red-500"
@@ -144,7 +150,55 @@ export default function AdminSidebar({ user }) {
           Se déconnecter
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Barre mobile avec bouton burger — visible seulement < md, fixe en haut, hors du flux flex */}
+      <div
+        className="md:hidden flex items-center justify-between w-full px-4 py-3 fixed top-0 left-0 z-30"
+        style={{
+          background: "#0D0D14",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
+        }}
+      >
+        <SogipLogo variant="icon" className="h-8 w-8" />
+        <button
+          onClick={() => setOpen(true)}
+          className="w-9 h-9 flex items-center justify-center rounded-lg"
+          style={{ color: "#C9A84C" }}
+          aria-label="Ouvrir le menu"
+        >
+          <MenuIcon />
+        </button>
+      </div>
+      {/* Espaceur pour compenser la hauteur de la barre fixe — évite que le contenu passe dessous */}
+      <div className="md:hidden h-[57px]" aria-hidden="true" />
+
+      {/* Overlay fond sombre — visible seulement quand le menu mobile est ouvert */}
+      {open && (
+        <div
+          className="md:hidden fixed inset-0 z-40"
+          style={{ background: "rgba(0,0,0,0.6)" }}
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Sidebar — overlay coulissant sur mobile, fixe sur desktop */}
+      <aside
+        className={`flex flex-col w-60 min-h-screen flex-shrink-0 fixed md:static top-0 left-0 z-50 transition-transform duration-200 ${
+          open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
+        style={{
+          background: "#0D0D14",
+          borderRight: "1px solid rgba(255,255,255,0.07)",
+        }}
+      >
+        {SidebarContent}
+      </aside>
+    </>
   );
 }
 
@@ -263,6 +317,41 @@ function LogoutIcon() {
       <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
       <polyline points="16 17 21 12 16 7" />
       <line x1="21" y1="12" x2="9" y2="12" />
+    </svg>
+  );
+}
+function MenuIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-5 h-5"
+      aria-hidden="true"
+    >
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  );
+}
+function CloseIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-5 h-5"
+      aria-hidden="true"
+    >
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   );
 }

@@ -1,10 +1,11 @@
 import Link from 'next/link'
 
 const VALUES = [
-  { label: 'Excellence',        desc: 'Des standards élevés dans chaque réalisation.' },
-  { label: 'Innovation',        desc: 'Des solutions modernes adaptées au contexte africain.' },
-  { label: 'Transparence',      desc: 'Une relation de confiance avec nos partenaires.' },
-  { label: 'Engagement',        desc: 'Un accompagnement à chaque étape du projet.' },
+  { label: 'Excellence',          desc: 'Des standards élevés dans chaque réalisation.' },
+  { label: 'Innovation',          desc: 'Des solutions modernes adaptées au contexte africain.' },
+  { label: 'Transparence',        desc: 'Une relation de confiance avec nos partenaires.' },
+  { label: 'Engagement',          desc: 'Un accompagnement à chaque étape du projet.' },
+  { label: 'Satisfaction client', desc: 'Des résultats pensés pour répondre aux besoins réels.' },
 ]
 
 export default function AboutPreview() {
@@ -12,7 +13,6 @@ export default function AboutPreview() {
     <section className="section" style={{ background: '#0A0A0E' }}>
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
           {/* Left — text */}
           <div>
             <div data-aos="fade-right">
@@ -23,10 +23,11 @@ export default function AboutPreview() {
               </h2>
               <div className="divider-gold" />
               <p className="mt-6 mb-8" style={{ color: '#8A8A8A', lineHeight: 1.8 }}>
-                SOGIP Group est une holding guinéenne fondée avec la vision de développer
-                des solutions modernes, durables et accessibles. Grâce à une approche
-                fondée sur l'innovation, la qualité et l'accompagnement, nous construisons
-                les solutions de demain, aujourd'hui.
+                SOGIP Group est une holding guinéenne multisectorielle spécialisée dans
+                la construction, l'immobilier, les énergies renouvelables et la formation
+                professionnelle. Notre mission est de développer des solutions modernes,
+                durables et accessibles, répondant aux besoins des particuliers, des
+                entreprises et des institutions.
               </p>
               <Link href="/about" className="btn btn-outline">
                 En savoir plus sur nous
@@ -39,7 +40,7 @@ export default function AboutPreview() {
             {VALUES.map((v, i) => (
               <div
                 key={v.label}
-                className="p-5 rounded-xl"
+                className={`p-5 rounded-xl ${i === VALUES.length - 1 ? 'sm:col-span-2' : ''}`}
                 style={{
                   background: '#1A1A22',
                   border: '1px solid rgba(255,255,255,0.07)',

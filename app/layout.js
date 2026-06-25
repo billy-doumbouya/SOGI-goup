@@ -32,7 +32,7 @@ export const metadata = {
     description:
       "Holding guinéenne multisectorielle. BTP · Immobilier · Énergie · Formation.",
     images: [
-      { url: "/og-image.jpg", width: 1200, height: 630, alt: "SOGIP Group" },
+      { url: "/logo-btp.jpg", width: 1200, height: 630, alt: "SOGIP Group" },
     ],
   },
   twitter: {
@@ -42,8 +42,8 @@ export const metadata = {
   },
   robots: { index: true, follow: true },
   icons: {
-    icon: "/logos/sogip-icon.svg",
-    apple: "/logos/sogip-icon.svg",
+    icon: "/logo.png",
+    apple: "/logo.png",
   },
 };
 
