@@ -1,10 +1,12 @@
+'use client'
+import React from 'react'
 import Link from 'next/link'
 
 const SERVICES = [
   {
-    href:        '/services/btp',
-    label:       'SOGIP BTP',
-    subtitle:    'Construction · Travaux Publics · Aménagement',
+    href: '/services/btp',
+    label: 'SOGIP BTP',
+    subtitle: 'Construction · Travaux Publics · Aménagement',
     description: 'Constructions résidentielles, génie civil, voiries et aménagement de bas-fonds agricoles avec une approche moderne et durable.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7" aria-hidden="true">
@@ -14,9 +16,9 @@ const SERVICES = [
     ),
   },
   {
-    href:        '/services/immo',
-    label:       'LePropio',
-    subtitle:    'Immobilier sans commission',
+    href: '/services/immo',
+    label: 'LePropio',
+    subtitle: 'Immobilier sans commission',
     description: 'Vente et achat de biens immobiliers sans intermédiaire. Évaluation, coaching immobilier et accompagnement juridique inclus.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7" aria-hidden="true">
@@ -26,9 +28,9 @@ const SERVICES = [
     ),
   },
   {
-    href:        '/services/energie',
-    label:       'Soleil Guinée',
-    subtitle:    'Énergies Renouvelables',
+    href: '/services/energie',
+    label: 'Soleil Guinée',
+    subtitle: 'Énergies Renouvelables',
     description: 'Études énergétiques, dimensionnement solaire, installation et maintenance pour particuliers et entreprises.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7" aria-hidden="true">
@@ -45,9 +47,9 @@ const SERVICES = [
     ),
   },
   {
-    href:        '/services/academy',
-    label:       'SOGIP Academy',
-    subtitle:    'Cabinet d\'Études & Formations',
+    href: '/services/academy',
+    label: 'SOGIP Academy',
+    subtitle: "Cabinet d'Études & Formations",
     description: 'Formations certifiantes en ligne et hybrides orientées résultats, adaptées aux réalités du marché professionnel moderne.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7" aria-hidden="true">
@@ -60,69 +62,70 @@ const SERVICES = [
 
 export default function ServicesOverview() {
   return (
-    <section className="section" style={{ background: '#0A0A0E' }}>
-      <div className="container">
+    <section className="py-20 bg-[var(--color-bg)]">
+      <div className="container mx-auto px-4">
 
-        {/* Header */}
+        {/* En-tête / Header de section */}
         <div className="text-center mb-16" data-aos="fade-up">
-          <span className="badge badge-gold mb-4">Nos Activités</span>
-          <h2 className="font-display mb-4">
+          <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[var(--color-gold)] bg-[var(--color-gold)]/10 rounded-full mb-4 uppercase">
+            Nos Activités
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--color-text)] mb-4">
             Quatre secteurs,{' '}
             <span className="text-gold-gradient">une vision</span>
           </h2>
-          <div className="divider-gold center" />
-          <p className="max-w-xl mx-auto mt-4" style={{ color: '#8A8A8A' }}>
+          <div className="w-12 h-1 bg-[var(--color-gold)] mx-auto rounded-full mt-4" />
+          <p className="max-w-xl mx-auto mt-6 text-[var(--color-text-muted)] leading-relaxed">
             SOGIP Group intervient dans des domaines complémentaires pour répondre
             aux besoins des particuliers, des entreprises et des institutions.
           </p>
         </div>
 
-        {/* Cards grid */}
+        {/* Grille des cartes */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {SERVICES.map((s, i) => (
             <Link
               key={s.href}
               href={s.href}
-              className="card group block"
+              className="group block p-8 rounded-2xl bg-[var(--color-bg-alt)] border border-[var(--color-border)] shadow-sm hover:shadow-md hover:border-[var(--color-gold)]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] transition-all duration-300"
               data-aos="fade-up"
               data-aos-delay={i * 80}
             >
-              {/* Icon */}
+              {/* Conteneur de l'icône */}
               <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110"
-                style={{
-                  background: 'rgba(201,168,76,0.08)',
-                  border: '1px solid rgba(201,168,76,0.2)',
-                  color: '#C9A84C',
-                }}
+                className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-105 bg-[var(--color-gold)]/10 text-[var(--color-gold)]"
               >
                 {s.icon}
               </div>
 
-              {/* Text */}
-              <p
-                className="text-xs font-medium tracking-widest uppercase mb-1"
-                style={{ color: '#C9A84C' }}
-              >
+              {/* Sous-titre textuel */}
+              <p className="text-xs font-bold tracking-widest uppercase mb-2 text-[var(--color-gold)] opacity-90">
                 {s.subtitle}
               </p>
-              <h3
-                className="font-display text-2xl mb-3 transition-colors duration-200 group-hover:text-[#C9A84C]"
-                style={{ color: '#F0EDE8' }}
-              >
+              
+              {/* Titre principal de la carte */}
+              <h3 className="text-2xl font-bold mb-3 text-[var(--color-text)] transition-colors duration-300 group-hover:text-[var(--color-gold)]">
                 {s.label}
               </h3>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: '#8A8A8A' }}>
+              
+              {/* Description */}
+              <p className="text-sm leading-relaxed mb-6 text-[var(--color-text-muted)]">
                 {s.description}
               </p>
 
-              {/* Arrow CTA */}
-              <span
-                className="inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 group-hover:gap-3"
-                style={{ color: '#C9A84C' }}
-              >
+              {/* Lien d'action avec transition transform pour la flèche */}
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-text)] group-hover:text-[var(--color-gold)] transition-colors duration-300">
                 En savoir plus
-                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
+                <svg 
+                  viewBox="0 0 20 20" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" 
+                  aria-hidden="true"
+                >
                   <path d="M4 10h12M12 5l5 5-5 5" />
                 </svg>
               </span>

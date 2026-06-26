@@ -54,21 +54,46 @@ export default function ContactPageClient() {
 
   return (
     <>
-      {/* Hero */}
+      {/* Hero — clip-path en vague bleue dégradée pour marquer l'entrée de page */}
       <section
-        className="pt-32 pb-16"
+        className="pt-32 pb-24 relative"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, #0A0A0E 60%)",
+            "linear-gradient(135deg, #0D3C66 0%, #1763A8 55%, #3F92DC 100%)",
+          clipPath: "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
         }}
       >
         <div className="container text-center" data-aos="fade-up">
-          <span className="badge badge-gold mb-4">Contact</span>
-          <h1 className="font-display mb-4">
-            Parlons de votre <span className="text-gold-gradient">projet</span>
+          <span
+            className="badge mb-4"
+            style={{
+              background: "rgba(255,255,255,0.12)",
+              color: "#FEFAE8",
+              border: "1px solid rgba(239,190,0,0.40)",
+            }}
+          >
+            Contact
+          </span>
+          <h1 className="font-display mb-4" style={{ color: "#FFFFFF" }}>
+            Parlons de votre{" "}
+            <span
+              style={{
+                color: "#F9D646",
+              }}
+            >
+              projet
+            </span>
           </h1>
-          <div className="divider-gold center" />
-          <p className="mt-4 max-w-lg mx-auto" style={{ color: "#8A8A8A" }}>
+          <div
+            className="divider-gold center"
+            style={{
+              background: "linear-gradient(90deg, #D4A800, #F9D646)",
+            }}
+          />
+          <p
+            className="mt-4 max-w-lg mx-auto"
+            style={{ color: "rgba(255,255,255,0.85)" }}
+          >
             Notre équipe est disponible pour répondre à toutes vos questions et
             étudier vos besoins.
           </p>
@@ -76,7 +101,7 @@ export default function ContactPageClient() {
       </section>
 
       {/* Content */}
-      <section className="section" style={{ background: "#0A0A0E" }}>
+      <section className="section" style={{ background: "#FFFFFF" }}>
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
             {/* Info */}
@@ -107,24 +132,28 @@ export default function ContactPageClient() {
               <div
                 className="p-6 rounded-xl"
                 style={{
-                  background: "#1A1A22",
-                  border: "1px solid rgba(201,168,76,0.15)",
+                  background: "#F7F9FC",
+                  border: "1px solid rgba(23,99,168,0.15)",
                 }}
               >
                 <h4
                   className="font-display text-lg mb-4"
-                  style={{ color: "#F0EDE8" }}
+                  style={{ color: "#0D2440" }}
                 >
                   Horaires
                 </h4>
-                <div className="space-y-2 text-sm" style={{ color: "#8A8A8A" }}>
+                <div className="space-y-2 text-sm" style={{ color: "#5A6B7D" }}>
                   <div className="flex justify-between">
                     <span>Lundi — Vendredi</span>
-                    <span style={{ color: "#C9A84C" }}>08h00 — 17h00</span>
+                    <span style={{ color: "#1763A8", fontWeight: 600 }}>
+                      08h00 — 17h00
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Samedi</span>
-                    <span style={{ color: "#C9A84C" }}>09h00 — 13h00</span>
+                    <span style={{ color: "#1763A8", fontWeight: 600 }}>
+                      09h00 — 13h00
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Dimanche</span>
@@ -139,7 +168,7 @@ export default function ContactPageClient() {
               <div className="card">
                 <h3
                   className="font-display text-2xl mb-6"
-                  style={{ color: "#F0EDE8" }}
+                  style={{ color: "#0D2440" }}
                 >
                   Envoyer un message
                 </h3>
@@ -233,18 +262,18 @@ function InfoBlock({ icon, label, value, href }) {
     <div className="flex items-start gap-4">
       <div
         className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-        style={{ background: "rgba(201,168,76,0.1)", color: "#C9A84C" }}
+        style={{ background: "rgba(23,99,168,0.10)", color: "#1763A8" }}
       >
         {icon}
       </div>
       <div>
         <p
           className="text-xs font-medium tracking-widest uppercase mb-0.5"
-          style={{ color: "#4A4A55" }}
+          style={{ color: "#9AA8B5" }}
         >
           {label}
         </p>
-        <p className="text-sm font-medium" style={{ color: "#F0EDE8" }}>
+        <p className="text-sm font-medium" style={{ color: "#0D2440" }}>
           {value}
         </p>
       </div>

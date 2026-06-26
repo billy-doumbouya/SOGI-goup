@@ -1,12 +1,10 @@
 import "../styles/globals.css";
 import { Toaster } from "sonner";
 import AOSInit from "@/components/layout/AOSInit";
-
 export const metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://sogipgroup.com",
   ),
-
   title: {
     default: "SOGIP Group — Vision · Innovation · Réalisation",
     template: "%s | SOGIP Group",
@@ -46,7 +44,6 @@ export const metadata = {
     apple: "/logo.png",
   },
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="fr" suppressHydrationWarning>
@@ -65,10 +62,11 @@ export default function RootLayout({ children }) {
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "#1A1A22",
-              border: "1px solid rgba(201,168,76,0.25)",
-              color: "#F0EDE8",
-              fontFamily: "DM Sans, sans-serif",
+              background: "#FFFFFF",
+              border: "1px solid rgba(239,190,0,0.30)",
+              color: "#0D2440",
+              fontFamily: "Inter, sans-serif",
+              boxShadow: "0 4px 24px rgba(13,36,64,0.08)",
             },
             classNames: {
               success: "toast-success",

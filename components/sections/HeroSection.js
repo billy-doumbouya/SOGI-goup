@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
@@ -9,7 +9,7 @@ const SERVICES_TICKER = ['BTP', 'Immobilier', 'Énergie Solaire', 'Formation']
 export default function HeroSection() {
   const canvasRef = useRef(null)
 
-  // Signature element : particules dorées interactives
+  // Signature element : particules dorées interactives ajustées sur le thème SOGIP
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -27,12 +27,12 @@ export default function HeroSection() {
     }
 
     const create = () => {
-      particles = Array.from({ length: 55 }, () => ({
+      particles = Array.from({ length: 45 }, () => ({
         x:  Math.random() * canvas.offsetWidth,
         y:  Math.random() * canvas.offsetHeight,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        r:  Math.random() * 1.5 + 0.4,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r:  Math.random() * 1.5 + 0.5,
       }))
     }
 
@@ -44,25 +44,25 @@ export default function HeroSection() {
         if (p.x < 0 || p.x > canvas.offsetWidth)  p.vx *= -1
         if (p.y < 0 || p.y > canvas.offsetHeight) p.vy *= -1
 
-        // Mouse repulsion
         const dx = p.x - mouse.x
         const dy = p.y - mouse.y
         const d  = Math.sqrt(dx * dx + dy * dy)
-        if (d < 90) { p.x += (dx / d) * 1.8; p.y += (dy / d) * 1.8 }
+        if (d < 90) { p.x += (dx / d) * 1.5; p.y += (dy / d) * 1.5 }
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(201,168,76,0.45)'
+        // Utilisation de la couleur Or SOGIP (rgba de --color-gold)
+        ctx.fillStyle = 'rgba(239, 190, 0, 0.35)'
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
           const q  = particles[j]
           const dd = Math.hypot(p.x - q.x, p.y - q.y)
-          if (dd < 130) {
+          if (dd < 120) {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(q.x, q.y)
-            ctx.strokeStyle = `rgba(201,168,76,${(1 - dd / 130) * 0.12})`
+            ctx.strokeStyle = `rgba(239, 190, 0, ${(1 - dd / 120) * 0.1})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -96,74 +96,79 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section
-      className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: 'radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.06) 0%, #0A0A0E 65%)' }}
-    >
-      {/* Particle canvas */}
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[var(--color-bg)] bg-[radial-gradient(ellipse_at_60%_40%,_var(--color-bg-subtle)_0%,_transparent_70%)]">
+      
+      {/* 🌊 CLIIP-PATH GÉOMÉTRIQUE COMPLEXE (Adapté aux teintes SOGIP de global.css) */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden" aria-hidden="true">
+        
+        {/* Wave 1 : Fond subtil alternatif */}
+        <div 
+          className="absolute right-0 top-0 w-full lg:w-[70%] h-full bg-gradient-to-br from-[var(--color-bg-alt)] via-[var(--color-bg-subtle)] to-[var(--color-bg)] opacity-70 [clip-path:polygon(100%_0,0_0,40%_40%,20%_100%,100%_100%)]"
+        />
+
+        {/* Wave 2 : Éclat Or très fluide et translucide */}
+        <div 
+          className="absolute right-0 bottom-0 w-[85%] lg:w-[50%] h-[80%] bg-gradient-to-tr from-[var(--color-gold-subtle)] via-transparent to-[var(--color-gold-subtle)] [clip-path:polygon(100%_15%,15%_35%,60%_70%,0%_100%,100%_100%)] blur-sm"
+        />
+
+        {/* Wave 3 : Lame de découpe corporate asymétrique */}
+        <div 
+          className="absolute right-0 top-0 w-full lg:w-[45%] h-full bg-[var(--color-bg-alt)] border-l border-[var(--color-border)] shadow-sm [clip-path:polygon(100%_0,50%_0,20%_30%,65%_65%,35%_100%,100%_100%)] hidden md:block"
+        />
+
+        {/* Faisceau lumineux bleu/or mixé */}
+        <div 
+          className="absolute right-[10%] top-[-10%] w-[250px] h-[120%] bg-gradient-to-b from-[var(--color-blue-light)]/5 via-transparent to-transparent rotate-[20deg] [clip-path:polygon(20%_0,80%_0,100%_100%,0%_100%)] blur-2xl hidden lg:block"
+        />
+      </div>
+
+      {/* Canvas des particules interactives */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
+        className="absolute inset-0 w-full h-full pointer-events-none z-10"
         aria-hidden="true"
       />
 
-      {/* Subtle grid overlay */}
+      {/* Grille de fond technique et élégante utilisant var(--color-border) */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none bg-[linear-gradient(var(--color-border)_1px,_transparent_1px),_linear-gradient(90deg,_var(--color-border)_1px,_transparent_1px)] bg-[size:100px_100px] opacity-60"
         aria-hidden="true"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 80px',
-        }}
       />
 
-      <div className="container relative z-10 pt-32 pb-20">
+      <div className="container relative z-20 pt-32 pb-20">
         <div className="max-w-4xl">
 
-          {/* Badge */}
+          {/* Badge issu de global.css (.badge-gold) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <span className="badge badge-gold mb-8 inline-flex">
-              <span
-                className="inline-block w-1.5 h-1.5 rounded-full"
-                style={{ background: '#C9A84C' }}
-              />
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-gold-dark)] animate-pulse" />
               Holding Guinéenne Multisectorielle
             </span>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline avec classes natives de dégradés */}
           <motion.h1
-            className="font-display mb-6"
-            style={{
-              fontSize: 'clamp(3rem, 7vw, 6rem)',
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: '-0.02em',
-            }}
+            className="mb-6 text-[var(--color-text)]"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
           >
             Construire{' '}
-            <span className="text-gold-gradient">aujourd'hui</span>
+            <span className="text-blue-gradient">aujourd'hui</span>
             <br />
             les solutions{' '}
-            <span style={{ color: '#8A8A8A', fontStyle: 'italic', fontWeight: 300 }}>
+            <span className="text-[var(--color-text-muted)] font-light italic">
               de demain
             </span>
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
-            className="text-lg md:text-xl mb-10 max-w-2xl"
-            style={{ color: '#8A8A8A', lineHeight: 1.75 }}
+            className="text-lg md:text-xl mb-10 max-w-2xl text-[var(--color-text-muted)]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25, ease: 'easeOut' }}
@@ -172,7 +177,7 @@ export default function HeroSection() {
             dans quatre secteurs clés en Guinée et en Afrique de l'Ouest.
           </motion.p>
 
-          {/* Services ticker */}
+          {/* Services tickers */}
           <motion.div
             className="flex flex-wrap gap-2 mb-10"
             initial={{ opacity: 0 }}
@@ -182,31 +187,27 @@ export default function HeroSection() {
             {SERVICES_TICKER.map((s, i) => (
               <span
                 key={s}
-                className="text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full"
-                style={{
-                  background: 'rgba(201,168,76,0.08)',
-                  border: '1px solid rgba(201,168,76,0.2)',
-                  color: '#C9A84C',
-                  animationDelay: `${i * 100}ms`,
-                }}
+                className="badge badge-blue text-[10px] font-bold tracking-widest cursor-default transition-all duration-300 hover:border-[var(--color-gold-dark)]"
+                style={{ animationDelay: `${i * 100}ms` }}
               >
                 {s}
               </span>
             ))}
           </motion.div>
 
-          {/* CTAs */}
+          {/* Boutons d'actions globaux (.btn-primary, .btn-outline) */}
           <motion.div
-            className="flex flex-wrap gap-4"
+            className="flex flex-col sm:flex-row gap-4 items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
           >
-            <Link href="/services" className="btn btn-primary">
+            <Link href="/services" className="btn btn-primary group w-full sm:w-auto justify-center">
               Découvrir nos services
               <ArrowRightIcon />
             </Link>
-            <Link href="/contact" className="btn btn-outline">
+            
+            <Link href="/contact" className="btn btn-outline w-full sm:w-auto justify-center text-center">
               Nous contacter
             </Link>
           </motion.div>
@@ -220,12 +221,12 @@ export default function HeroSection() {
           transition={{ delay: 1.2, duration: 0.6 }}
           aria-hidden="true"
         >
-          <span className="text-xs tracking-[0.2em] uppercase" style={{ color: '#4A4A55' }}>
+          <span className="text-[10px] tracking-[0.25em] uppercase font-semibold text-[var(--color-text-faint)]">
             Défiler
           </span>
           <motion.div
             className="w-px h-12 origin-top"
-            style={{ background: 'linear-gradient(to bottom, #C9A84C, transparent)' }}
+            style={{ background: 'linear-gradient(to bottom, var(--color-gold-dark), transparent)' }}
             animate={{ scaleY: [0, 1, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
           />
@@ -237,7 +238,16 @@ export default function HeroSection() {
 
 function ArrowRightIcon() {
   return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
+    <svg 
+      viewBox="0 0 20 20" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" 
+      aria-hidden="true"
+    >
       <path d="M4 10h12M12 5l5 5-5 5" />
     </svg>
   )

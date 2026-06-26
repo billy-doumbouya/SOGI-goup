@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { STATS } from '@/lib/stat'
 
 function useCounter(target, duration = 1800, active = false) {
@@ -23,23 +23,25 @@ function StatItem({ value, suffix, label, desc, active, delay }) {
   const count = useCounter(value, 1600, active)
   return (
     <div
-      className="text-center px-6 py-8"
+      className="text-center px-6 py-10 transition-colors duration-300 hover:bg-[var(--color-bg-subtle)]"
       data-aos="fade-up"
       data-aos-delay={delay}
     >
+      {/* Valeur numérique avec gradient Or SOGIP natif */}
       <div
-        className="text-5xl md:text-6xl font-display font-bold mb-2 text-gold-gradient"
+        className="text-5xl md:text-6xl font-extrabold mb-2 text-gold-gradient"
         aria-label={`${value}${suffix} ${label}`}
       >
         {count}{suffix}
       </div>
-      <div
-        className="text-base font-semibold mb-1"
-        style={{ color: '#F0EDE8' }}
-      >
+      
+      {/* Label principal adapté à var(--color-text) */}
+      <div className="text-base font-bold mb-1 text-[var(--color-text)]">
         {label}
       </div>
-      <div className="text-sm" style={{ color: '#4A4A55' }}>
+      
+      {/* Description atténuée adaptée à var(--color-text-muted) */}
+      <div className="text-xs text-[var(--color-text-muted)] max-w-[200px] mx-auto leading-relaxed">
         {desc}
       </div>
     </div>
@@ -53,7 +55,7 @@ export default function StatsSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setActive(true); observer.disconnect() } },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     )
     if (ref.current) observer.observe(ref.current)
     return () => observer.disconnect()
@@ -62,32 +64,26 @@ export default function StatsSection() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden"
-      style={{
-        background: '#111118',
-        borderTop:    '1px solid rgba(255,255,255,0.07)',
-        borderBottom: '1px solid rgba(255,255,255,0.07)',
-      }}
+      className="relative overflow-hidden bg-[var(--color-bg-alt)] border-t border-b border-[var(--color-border)]"
     >
-      {/* Gold glow top */}
+      {/* Ligne lumineuse décorative supérieure aux couleurs Or SOGIP */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)' }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-px pointer-events-none bg-gradient-to-r from-transparent via-[var(--color-gold)]/40 to-transparent"
         aria-hidden="true"
       />
-      <div className="container">
-        <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0"
-          style={{ '--tw-divide-opacity': 1, borderColor: 'rgba(255,255,255,0.06)' }}
-        >
+      
+      <div className="container mx-auto">
+        {/* Grille avec séparateurs adaptatifs basés sur var(--color-border) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-[var(--color-border)] border-[var(--color-border)]">
           {STATS.map((s, i) => (
             <StatItem key={s.label} {...s} active={active} delay={i * 100} />
           ))}
         </div>
       </div>
-      {/* Gold glow bottom */}
+      
+      {/* Ligne lumineuse décorative inférieure aux couleurs Or SOGIP */}
       <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)' }}
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-px pointer-events-none bg-gradient-to-r from-transparent via-[var(--color-gold)]/40 to-transparent"
         aria-hidden="true"
       />
     </section>

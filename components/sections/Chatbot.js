@@ -32,9 +32,7 @@ export default function Chatbot() {
     const textarea = inputRef.current;
     if (!textarea) return;
 
-    // Réinitialise la hauteur pour recalculer correctement le scrollHeight
     textarea.style.height = "auto";
-    // Applique la nouvelle hauteur basée sur le contenu textuel
     textarea.style.height = `${textarea.scrollHeight}px`;
   }, [input]);
 
@@ -44,14 +42,13 @@ export default function Chatbot() {
 
     const userMsg = { role: "user", content: text };
 
-    // 1. On sauvegarde l'historique actuel AVANT d'ajouter le nouveau message
-    // On filtre pour retirer le message d'accueil initial si celui-ci se retrouve en première position
+    // Nettoyage de l'historique initial pour se conformer aux exigences de structure de Gemini
     const rawHistory = [...messages];
     if (rawHistory[0]?.content === WELCOME) {
-      rawHistory.shift(); // Gemini refuse un historique qui commence par le modèle
+      rawHistory.shift(); 
     }
 
-    // 2. Mise à jour de l'interface
+    // Mise à jour locale immédiate de l'interface
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setLoading(true);
@@ -62,7 +59,7 @@ export default function Chatbot() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: text,
-          history: rawHistory.slice(-10), // Envoi de l'historique nettoyé et tronqué
+          history: rawHistory.slice(-10),
         }),
       });
 
@@ -76,7 +73,6 @@ export default function Chatbot() {
     } catch (err) {
       console.error(err);
       toast.error("Impossible de contacter l'assistant. Réessayez.");
-      // Optionnel : ne pas supprimer le message de l'utilisateur pour qu'il puisse le copier/recommencer
     } finally {
       setLoading(false);
     }
@@ -85,12 +81,14 @@ export default function Chatbot() {
   const onKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      send();
+      if (input.trim() && !loading) {
+        send();
+      }
     }
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 select-none">
       {/* Chat panel */}
       <AnimatePresence>
         {open && (
@@ -99,7 +97,7 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-80 sm:w-96 rounded-2xl overflow-hidden flex flex-col"
+            className="w-80 sm:w-96 rounded-2xl overflow-hidden flex flex-col select-text"
             style={{
               background: "#111118",
               border: "1px solid rgba(201,168,76,0.2)",
@@ -127,10 +125,7 @@ export default function Chatbot() {
                   <BotIcon />
                 </div>
                 <div>
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: "#F0EDE8" }}
-                  >
+                  <p className="text-sm font-semibold" style={{ color: "#F0EDE8" }}>
                     SOGI
                   </p>
                   <div className="flex items-center gap-1.5">
@@ -143,27 +138,29 @@ export default function Chatbot() {
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-[#8A8A8A] hover:text-[#F0EDE8] transition-colors"
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-[#8A8A8A] hover:text-[#F0EDE8] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)]"
                 aria-label="Fermer le chat"
               >
                 <CloseIcon />
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+            {/* Messages Area */}
+            <div 
+              className="flex-1 overflow-y-auto px-4 py-4 space-y-3 scrollbar-thin"
+              style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.1) transparent' }}
+            >
               {messages.map((msg, i) => (
                 <div
                   key={i}
                   className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className="max-w-[85%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap"
+                    className="max-w-[85%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words"
                     style={
                       msg.role === "user"
                         ? {
-                            background:
-                              "linear-gradient(135deg, #9A7A30, #C9A84C)",
+                            background: "linear-gradient(135deg, #9A7A30, #C9A84C)",
                             color: "#0A0A0E",
                             fontWeight: 500,
                             borderRadius: "16px 16px 4px 16px",
@@ -210,7 +207,7 @@ export default function Chatbot() {
               <div ref={bottomRef} />
             </div>
 
-            {/* Input */}
+            {/* Input Bar */}
             <div
               className="px-3 py-3 flex-shrink-0"
               style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
@@ -229,18 +226,19 @@ export default function Chatbot() {
                   onKeyDown={onKeyDown}
                   placeholder="Posez votre question..."
                   rows={1}
-                  className="flex-1 bg-transparent resize-none outline-none text-sm leading-relaxed py-1 custom-scrollbar"
+                  className="flex-1 bg-transparent resize-none outline-none text-sm leading-relaxed py-1 scrollbar-none"
                   style={{
                     color: "#F0EDE8",
                     maxHeight: "96px",
                     height: "auto",
+                    scrollbarWidth: "none"
                   }}
                   aria-label="Message"
                 />
                 <button
                   onClick={send}
                   disabled={!input.trim() || loading}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 mb-[2px]"
+                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 mb-[2px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)]"
                   style={{
                     background:
                       input.trim() && !loading
@@ -253,10 +251,7 @@ export default function Chatbot() {
                   <SendIcon />
                 </button>
               </div>
-              <p
-                className="text-center text-xs mt-2"
-                style={{ color: "#4A4A55" }}
-              >
+              <p className="text-center text-xs mt-2" style={{ color: "#4A4A55" }}>
                 Propulsé par Google AI
               </p>
             </div>
@@ -267,7 +262,7 @@ export default function Chatbot() {
       {/* Toggle button */}
       <motion.button
         onClick={() => setOpen(!open)}
-        className="w-14 h-14 rounded-full flex items-center justify-center relative"
+        className="w-14 h-14 rounded-full flex items-center justify-center relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#111118]"
         style={{
           background: "linear-gradient(135deg, #9A7A30, #C9A84C)",
           boxShadow: "0 8px 32px rgba(201,168,76,0.35)",
@@ -306,7 +301,7 @@ export default function Chatbot() {
         {/* Pulse ring */}
         {!open && (
           <motion.span
-            className="absolute inset-0 rounded-full"
+            className="absolute inset-0 rounded-full pointer-events-none"
             style={{ border: "2px solid rgba(201,168,76,0.5)" }}
             animate={{ scale: [1, 1.4], opacity: [0.5, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
